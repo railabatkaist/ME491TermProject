@@ -40,7 +40,7 @@ elseif(WIN32)
     SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_CURRENT_SOURCE_DIR}/raisimGymTorch/env/bin)
 endif()
 
-add_subdirectory(../pybind11 pybind11)
+add_subdirectory(../raisimLib/thirdParty/pybind11 pybind11)
 find_package(Eigen3 REQUIRED)
 find_package(OpenMP REQUIRED)
 find_package(raisim CONFIG REQUIRED)

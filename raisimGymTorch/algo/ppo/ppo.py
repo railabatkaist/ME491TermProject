@@ -27,7 +27,8 @@ class PPO:
                  log_dir='run',
                  device='cpu',
                  mini_batch_sampling='shuffle',
-                 log_intervals=10):
+                 log_intervals=10,
+                 testmode=False):
 
         # PPO components
         self.actor = actor
@@ -60,8 +61,9 @@ class PPO:
         self.use_clipped_value_loss = use_clipped_value_loss
 
         # Log
-        self.log_dir = os.path.join(log_dir, datetime.now().strftime('%b%d_%H-%M-%S'))
-        self.writer = SummaryWriter(log_dir=self.log_dir, flush_secs=10)
+        if not testmode:
+            self.log_dir = os.path.join(log_dir, datetime.now().strftime('%b%d_%H-%M-%S'))
+            self.writer = SummaryWriter(log_dir=self.log_dir, flush_secs=10)
         self.tot_timesteps = 0
         self.tot_time = 0
         self.ep_infos = []

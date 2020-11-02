@@ -39,7 +39,7 @@ act_dim = env.num_acts
 
 # save the configuration and other files
 saver = ConfigurationSaver(log_dir=home_path + "/data",
-                           save_items=[task_path + "/cfg.yaml", task_path + "/Environment.hpp", task_path + "/runner.py"])
+                           save_items=[task_path + "/cfg.yaml", task_path + "/Environment.hpp", task_path + "/runner.py"], testmode=test_mode)
 
 # Training
 n_steps = math.floor(cfg['environment']['max_time'] / cfg['environment']['control_dt'])
@@ -73,7 +73,7 @@ ppo = PPO.PPO(actor=actor,
               device='cuda',
               log_dir=saver.data_dir,
               mini_batch_sampling='in_order',
-              )
+              testmode=test_mode)
 
 if not test_mode:
     for update in range(1000000):
@@ -164,8 +164,9 @@ if not test_mode:
 
 if test_mode:
     curriculum_setting = True
-    save_dir = os.environ['WORKSPACE'] + "/ME491TermProject/data/~~~~~~~~"
-    test_policy = 1000
+# you need to change save directory which you want to test
+    save_dir = os.environ['WORKSPACE'] + "/ME491TermProject/data/2020-11-02-10-32-28"
+    test_policy = 0
     env.turn_on_visualization()
     env.start_video_recording(datetime.datetime.now().strftime("%Y-%m-%d-%H-%M-%S") + "policy_"+str(test_policy)+'.mp4')
     env.load_scaling(save_dir, test_policy)
